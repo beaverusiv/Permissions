@@ -1,6 +1,5 @@
 <?php namespace Bocapa\Permissions;
 
-use Illuminate\Support\Facades\Cache;
 use Bocapa\Permissions\Models\Group;
 use Bocapa\Permissions\Models\Permission;
 
@@ -10,7 +9,7 @@ class Permissions {
     public static function cache()
     {
         $permissions = Group::with('permissions')->get();
-        Cache::forever('permissions', $permissions);
+        \Cache::forever('permissions', $permissions);
     }
 
     /**
@@ -22,13 +21,13 @@ class Permissions {
      */
     public static function allowed($route_name)
     {
-        $cached_permissions = Cache::get('permissions');
+        $cached_permissions = \Cache::get('permissions');
 
         // Given a user and a route name, find the corresponding
         // Permission if it exists (default: deny)
         $groups = $cached_permissions->filter(function($group)
         {
-            return $group->users->contains(9);
+            return $group->name == 'Default' || $group->users->contains(\Auth::id());
         });
 
         foreach($groups as $group) {
