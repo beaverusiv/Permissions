@@ -20,6 +20,11 @@ class PermissionsServiceProvider extends ServiceProvider {
 	{
         $this->package('bocapa/permissions');
 
+        \App::bind('permissions', function()
+        {
+            return new Permissions;
+        });
+
         \Event::listen('permissions.changed', function()
         {
             Permissions::cache();

@@ -14,7 +14,8 @@
     "autoload": {
         "classmap": [
             "src/controllers",
-            "src/models"
+            "src/models",
+            "src/facades"
         ],
         "psr-0": {
             "Bocapa\\Permissions": "src/"
