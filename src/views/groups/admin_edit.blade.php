@@ -16,13 +16,21 @@ Edit Group
             <div class="box-body table-responsive">
                 <!-- text input -->
                 <div class="form-group">
+                    <?php // TODO: make this a macro ?>
+                    @if(isset($group))
                     {{ Form::model($group, ['route' => ['groups.adminSave', $group->id]]) }}
+                    @else
+                    {{ Form::open(['route' => ['groups.adminSave', 0]]) }}
+                    @endif
                     {{ Form::label('name', 'Group Name') }}
                     {{ Form::text('name', null, ['class' => 'form-control']) }}
-                    {{ Form::submit('Save Name') }}
+                    {{ Form::label('home_route', 'Home Route') }}
+                    {{ Form::text('home_route', null, ['class' => 'form-control']) }}
+                    {{ Form::submit('Save Details') }}
                     {{ Form::close() }}
                 </div>
 
+                @if(isset($group))
                 {{ Form::open(['route' => ['groups.adminSave', $group->id]]) }}
                 <table class="table table-hover">
                     <thead>
@@ -46,6 +54,7 @@ Edit Group
                 </table>
                 {{ Form::submit('Save Permissions') }}
                 {{ Form::close() }}
+                @endif
 
             </div><!-- /.box-body -->
 

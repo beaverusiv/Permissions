@@ -34,6 +34,38 @@ class PermissionsServiceProvider extends ServiceProvider {
         {
             Permissions::generate($param);
         });
+
+        \Event::listen('menu.generate', function()
+        {
+            $menu_options = [
+                'ul' => ['class' => 'treeview-menu'],
+                'text-prepend' => '<i class="fa fa-lock"></i>',
+                'text-append' => '<i class="fa fa-angle-left pull-right"></i>',
+                'li' => ['class' => 'treeview']
+            ];
+
+            $groups_options = [
+                'a' => [
+                    'route' => 'groups.adminBrowse',
+                    'style' => 'margin-left: 2px;'
+                ],
+                'text-prepend' => '<i class="fa fa-angle-double-right"></i>'
+            ];
+
+            $edit_group_options = [
+                'a' => [
+                    'route' => 'groups.adminEdit'
+                ],
+                'hidden' => true
+            ];
+
+            if($menu = \Menu::exists('backend')) {
+                // $content = $menu->
+                $content = $menu->addItem('Permissions', $menu_options);
+                $groups = $content->addItem('Groups', $groups_options);
+                $groups->addItem('Edit Group', $edit_group_options);
+            }
+        });
 	}
 
     public function boot()
@@ -43,6 +75,16 @@ class PermissionsServiceProvider extends ServiceProvider {
         }
 
         include __DIR__.'/../../routes.php';
+
+        \Route::filter('bocapa.auth', function()
+        {
+            if(!Permissions::allowed(\Route::current()->getName())) {
+                return \Redirect::to('/');
+            }
+        });
+
+        // Nuclear option to run our permission checking on all routes.
+        \Route::when('*', 'bocapa.auth');
     }
 
 	/**
