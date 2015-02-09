@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Bocapa\Permissions\Models\Group;
 use Bocapa\Permissions\Models\Permission;
+use App\User;
 
 class PermissionsSeeder extends Seeder {
 
@@ -25,7 +26,6 @@ class PermissionsSeeder extends Seeder {
         $admin_group = new Group(array('name' => 'Admin'));
 
         // Create default admin user
-        // TODO: from config?
         $admin_user = User::where('email', '=', 'nic@bocapa.com')->first();
         $admin_user->groups()->save($registered_group);
         $admin_user->groups()->save($admin_group);
