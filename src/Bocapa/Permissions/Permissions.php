@@ -21,6 +21,9 @@ class Permissions {
      */
     public static function allowed($route_name)
     {
+        // Base case: Everyone should be able to see the homepage
+        if('default.route' == $route_name) return true;
+
         $cached_permissions = \Cache::get('permissions');
 
         // Given a user and a route name, find the corresponding

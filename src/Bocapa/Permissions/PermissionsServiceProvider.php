@@ -18,8 +18,6 @@ class PermissionsServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $this->package('bocapa/permissions');
-
         \App::bind('permissions', function()
         {
             return new Permissions;
@@ -60,7 +58,6 @@ class PermissionsServiceProvider extends ServiceProvider {
             ];
 
             if($menu = \Menu::exists('backend')) {
-                // $content = $menu->
                 $content = $menu->addItem('Permissions', $menu_options);
                 $groups = $content->addItem('Groups', $groups_options);
                 $groups->addItem('Edit Group', $edit_group_options);
