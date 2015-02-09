@@ -33,6 +33,16 @@ class PermissionsSeeder extends Seeder {
         // Create permission to let admin edit permissions
         $admin_group_perms = [
             new Permission([
+                'name' => 'Login Form',
+                'route_name' => 'auth.loginForm',
+                'permitted' => true
+            ]),
+            new Permission([
+                'name' => 'Process Login',
+                'route_name' => 'auth.login',
+                'permitted' => true
+            ]),
+            new Permission([
                 'name' => 'View all groups',
                 'route_name' => 'groups.adminBrowse',
                 'permitted' => true
