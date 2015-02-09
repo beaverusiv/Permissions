@@ -21,22 +21,39 @@ class PermissionsSeeder extends Seeder {
         DB::table('group_user')->delete();
 
         // Create default groups
-        Group::create(array('name' => 'Default'));
-        $registered_group = Group::create(array('name' => 'Registered'));
-        $admin_group = new Group(array('name' => 'Admin'));
+        Group::create(['name' => 'Default']);
+        $registered_group = Group::create(['name' => 'Registered']);
+        $admin_group = Group::create(['name' => 'Admin', 'home_route' => 'groups.adminBrowse']);
 
         // Create default admin user
         $admin_user = User::where('email', '=', 'nic@bocapa.com')->first();
         $admin_user->groups()->save($registered_group);
         $admin_user->groups()->save($admin_group);
 
-        // Create permission to let admin view backend
-        $admin_dashboard_perm = new Permission(array(
-                'name' => 'Admins View Backend',
-                'route_name' => 'dashboard',
+        // Create permission to let admin edit permissions
+        $admin_group_perms = [
+            new Permission([
+                'name' => 'View all groups',
+                'route_name' => 'groups.adminBrowse',
                 'permitted' => true
-        ));
-        $admin_group->permissions()->save($admin_dashboard_perm);
+            ]),
+            new Permission([
+                'name' => 'View a group',
+                'route_name' => 'groups.adminEdit',
+                'permitted' => true
+            ]),
+            new Permission([
+                'name' => 'Save a group',
+                'route_name' => 'groups.adminSave',
+                'permitted' => true
+            ]),
+            new Permission([
+                'name' => 'Delete a group',
+                'route_name' => 'groups.adminDelete',
+                'permitted' => true
+            ])
+        ];
+        $admin_group->permissions()->saveMany($admin_group_perms);
     }
 
 }
