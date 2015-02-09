@@ -21,7 +21,7 @@ class PermissionsSeeder extends Seeder {
         DB::table('group_user')->delete();
 
         // Create default groups
-        Group::create(['name' => 'Default']);
+        $default_group = Group::create(['name' => 'Default']);
         $registered_group = Group::create(['name' => 'Registered']);
         $admin_group = Group::create(['name' => 'Admin', 'home_route' => 'groups.adminBrowse']);
 
@@ -30,18 +30,23 @@ class PermissionsSeeder extends Seeder {
         $admin_user->groups()->save($registered_group);
         $admin_user->groups()->save($admin_group);
 
-        // Create permission to let admin edit permissions
+        // Create permissions to let people login
+        $default_group_perms = [
+                new Permission([
+                        'name' => 'Login Form',
+                        'route_name' => 'auth.loginForm',
+                        'permitted' => true
+                ]),
+                new Permission([
+                        'name' => 'Process Login',
+                        'route_name' => 'auth.login',
+                        'permitted' => true
+                ])
+        ];
+        $default_group->permissions()->saveMany($default_group_perms);
+
+        // Create permissions to let admin edit permissions
         $admin_group_perms = [
-            new Permission([
-                'name' => 'Login Form',
-                'route_name' => 'auth.loginForm',
-                'permitted' => true
-            ]),
-            new Permission([
-                'name' => 'Process Login',
-                'route_name' => 'auth.login',
-                'permitted' => true
-            ]),
             new Permission([
                 'name' => 'View all groups',
                 'route_name' => 'groups.adminBrowse',
