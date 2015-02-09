@@ -71,7 +71,7 @@ class PermissionsServiceProvider extends ServiceProvider {
             Permissions::cache();
         }
 
-        include __DIR__.'/../../routes.php';
+        include __DIR__.'/routes.php';
 
         \Route::filter('bocapa.auth', function()
         {
