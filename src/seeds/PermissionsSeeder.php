@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Bocapa\Permissions\Models\Group;
 use Bocapa\Permissions\Models\Permission;
 use App\User;
@@ -32,16 +33,16 @@ class PermissionsSeeder extends Seeder {
 
         // Create permissions to let people login
         $default_group_perms = [
-                new Permission([
-                        'name' => 'Login Form',
-                        'route_name' => 'auth.loginForm',
-                        'permitted' => true
-                ]),
-                new Permission([
-                        'name' => 'Process Login',
-                        'route_name' => 'auth.login',
-                        'permitted' => true
-                ])
+            new Permission([
+                'name' => 'Login Form',
+                'route_name' => 'auth.loginForm',
+                'permitted' => true
+            ]),
+            new Permission([
+                'name' => 'Process Login',
+                'route_name' => 'auth.login',
+                'permitted' => true
+            ])
         ];
         $default_group->permissions()->saveMany($default_group_perms);
 
@@ -69,6 +70,8 @@ class PermissionsSeeder extends Seeder {
             ])
         ];
         $admin_group->permissions()->saveMany($admin_group_perms);
+
+        Event::fire('permissions.changed');
     }
 
 }
