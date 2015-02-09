@@ -28,11 +28,11 @@ class Group extends Model {
     /**
      * Return users belonging to a particular group.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->hasMany('App\User');
     }
 
     /**
