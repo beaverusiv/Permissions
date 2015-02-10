@@ -73,6 +73,12 @@ class PermissionsServiceProvider extends ServiceProvider {
 
         include __DIR__.'/routes.php';
 
+        $this->loadViewsFrom(__DIR__.'/views', 'permissions');
+
+        $this->publishes([
+            __DIR__.'/config/config.php' => config_path('permissions.php'),
+        ]);
+
         \Route::filter('bocapa.auth', function()
         {
             if(!Permissions::allowed(\Route::current()->getName())) {
