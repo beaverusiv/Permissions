@@ -1,4 +1,4 @@
-<?php
+<?php namespace Bocapa\Permissions\Controllers;
 
 use Illuminate\Routing\Controller;
 use Bocapa\Permissions\Models\Group;
