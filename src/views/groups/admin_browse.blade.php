@@ -9,7 +9,7 @@ Groups
         <div class="col-xs-7">
             <h1>Groups</h1>
             <div class="btn-group pull-right">
-                <a href="{{ route('groups.adminEdit', [0]) }}" class="btn btn-primary btn-social">
+                <a href="{!! route('groups.adminEdit', [0]) !!}" class="btn btn-primary btn-social">
                     <i class="fa fa-plus-square-o"></i> Add Group
                 </a>
             </div>
@@ -17,7 +17,7 @@ Groups
         <div class="col-xs-5">
             <h1>New Group</h1>
             <div class="btn-group pull-right">
-                <a href="{{ route('groups.adminSave', [0]) }}" class="btn btn-primary btn-social">
+                <a href="{!! route('groups.adminSave', [0]) !!}" class="btn btn-primary btn-social">
                     <i class="fa fa-plus-square-o"></i> Save
                 </a>
             </div>
@@ -48,14 +48,14 @@ Groups
                         <tbody>
                             @foreach($groups as $group)
                             <tr>
-                                <td>{{ $group->id }}</td>
-                                <td>{{ $group->name }}</td>
-                                <td>{{ $group->users()->count() }}</td>
-                                <td>@if($group->home_route) {{ route($group->home_route) }} @endif</td>
-                                <td>{{ $group->created_at }}</td>
+                                <td>{!! $group->id !!}</td>
+                                <td>{!! $group->name !!}</td>
+                                <td>{!! $group->users()->count() !!}</td>
+                                <td>@if($group->home_route) {!! route($group->home_route) !!} @endif</td>
+                                <td>{!! $group->created_at !!}</td>
                                 <td>
-                                    {{ HTML::linkRoute('groups.adminEdit', 'Edit', [$group->id], ['class' => 'btn btn-primary btn-sm']) }}
-                                    {{ HTML::linkRoute('groups.adminDelete', 'Delete', [$group->id], ['class' => 'btn btn-danger btn-sm']) }}
+                                    {!! HTML::linkRoute('groups.adminEdit', 'Edit', [$group->id], ['class' => 'btn btn-primary btn-sm']) !!}
+                                    {!! HTML::linkRoute('groups.adminDelete', 'Delete', [$group->id], ['class' => 'btn btn-danger btn-sm']) !!}
                                 </td>
                             </tr>
                             @endforeach
@@ -73,20 +73,20 @@ Groups
                     <div class="form-group">
                         <?php // TODO: make this a macro ?>
                         @if(isset($group))
-                        {{ Form::model($group, ['route' => ['groups.adminSave', $group->id]]) }}
+                        {!! Form::model($group, ['route' => ['groups.adminSave', $group->id]]) !!}
                         @else
-                        {{ Form::open(['route' => ['groups.adminSave', 0]]) }}
+                        {!! Form::open(['route' => ['groups.adminSave', 0]]) !!}
                         @endif
-                        {{ Form::label('name', 'Group Name') }}
-                        {{ Form::text('name', null, ['class' => 'form-control']) }}
-                        {{ Form::label('home_route', 'Home Route') }}
-                        {{ Form::text('home_route', null, ['class' => 'form-control']) }}
-                        {{ Form::submit('Save Details') }}
-                        {{ Form::close() }}
+                        {!! Form::label('name', 'Group Name') !!}
+                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('home_route', 'Home Route') !!}
+                        {!! Form::text('home_route', null, ['class' => 'form-control']) !!}
+                        {!! Form::submit('Save Details') !!}
+                        {!! Form::close() !!}
                     </div>
 
                     @if(isset($group))
-                    {{ Form::open(['route' => ['groups.adminSave', $group->id]]) }}
+                    {!! Form::open(['route' => ['groups.adminSave', $group->id]]) !!}
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -99,16 +99,16 @@ Groups
                         <tbody>
                         @foreach($group->permissions()->get() as $permission)
                         <tr>
-                            <td class="text-center">{{ $permission->id }}</td>
-                            <td>{{ $permission->route_name }}</td>
-                            <td>{{ Form::text($permission->id.'_name', $permission->name) }}</td>
-                            <td class="text-center">{{ Form::checkbox($permission->id.'_permitted', '1', $permission->permitted) }}</td>
+                            <td class="text-center">{!! $permission->id !!}</td>
+                            <td>{!! $permission->route_name !!}</td>
+                            <td>{!! Form::text($permission->id.'_name', $permission->name) !!}</td>
+                            <td class="text-center">{!! Form::checkbox($permission->id.'_permitted', '1', $permission->permitted) !!}</td>
                         </tr>
                         @endforeach
                         </tbody>
                     </table>
-                    {{ Form::submit('Save Permissions') }}
-                    {{ Form::close() }}
+                    {!! Form::submit('Save Permissions') !!}
+                    {!! Form::close() !!}
                     @endif
 
                 </div><!-- /.box-body -->
