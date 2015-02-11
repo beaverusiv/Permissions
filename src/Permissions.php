@@ -70,7 +70,7 @@ class Permissions {
                 }
             }
 
-            if($create) {
+            if($create && !is_null($route->getName())) {
                 // TODO: defaults should be in Permission migration
                 $permission = Permission::create([
                     'name' => '',

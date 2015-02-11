@@ -74,6 +74,7 @@ Groups
                         <?php // TODO: make this a macro ?>
                         @if(isset($group))
                         {!! Form::model($group, ['route' => ['groups.adminSave', $group->id]]) !!}
+                        {!! Form::open(['route' => ['groups.adminSave', 0]]) !!}
                         @else
                         {!! Form::open(['route' => ['groups.adminSave', 0]]) !!}
                         @endif
