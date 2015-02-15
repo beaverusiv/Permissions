@@ -46,6 +46,15 @@ class PermissionsSeeder extends Seeder {
         ];
         $default_group->permissions()->saveMany($default_group_perms);
 
+        $registered_group_perms = [
+            new Permission([
+                'name' => 'Process Logout',
+                'route_name' => 'auth.logout',
+                'permitted' => true
+            ])
+        ];
+        $registered_group->permissions()->saveMany($registered_group_perms);
+
         // Create permissions to let admin edit permissions
         $admin_group_perms = [
             new Permission([
